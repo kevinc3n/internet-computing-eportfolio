@@ -1,0 +1,47 @@
+.resizable {
+    height: 30px;
+    min-height: 30px;
+    max-height: 200px;
+
+    min-width: 400px;
+    width: 400px;
+    max-width: 400px;
+    
+    resize: both;
+    overflow: auto;
+    border: 1px solid #000;
+}
+
+.textFormat{
+    font-family: Montserrat;
+    font-size: 16px;
+}
+
+.carousel-caption{
+    color: black;
+}
+
+.carousel-indicators li {
+    background-color: rgb(0, 0, 0, 0.532);
+}
+  
+.carousel-indicators .active {
+    background-color: rgba(0, 0, 0, 0.532);
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    filter: invert(1);
+}
+
+.carousel-control-prev:hover, .carousel-control-prev-icon, .carousel-control-next:hover, .carousel-control-next-icon {
+    filter: invert(0.5);
+}
+  
+.buttonFormat {
+    background-color: #383434; 
+    border: #383434
+}
+
+.btn-primary:hover {
+    background-color: rgb(89, 89, 89);
+}

@@ -1,0 +1,477 @@
+<html>
+    <head>
+      <title>
+          Fitness Calorie Calculator
+      </title>
+
+      <!-- BOOTSTRAP CDN LINK -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+      
+      <!-- BOOTSTRAP META TAGS -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <!-- CDN FOR HOME ICON-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+      <!-- CSS LINKS -->
+      <link href="../style.css" rel="stylesheet" type="text/css">
+      <link href="../assign2/assign2_style.css" rel="stylesheet" type="text/css">
+      <link href="assign4_style.css" rel="stylesheet" type="text/css">
+      <link rel="icon" type="image/x-icon" href="../assign2/assign2_files/running.png">
+
+      <!-- JQUERY LINK -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+
+      <!-- INCLUDE JS FILE THAT CONTAINS CALCULATION FUNCTIONS -->
+      <script src="calculation.js"></script>
+
+    </head>
+
+    <body style="margin-left: unset; margin-right: unset; margin-top: unset; margin-bottom: unset;">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg shadow-lg" style="background-color: #f0b22e92">
+          <div class="container-fluid">
+            <h1 class="navbar-brand text-wrap" style="font-size: 2rem;">CIS4930: EPortfolio </h1>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse text-wrap" id="navbarSupportedContent">
+              <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="https://www.cise.ufl.edu/~kcen/cis4930/" style="font-size: larger; color: black">
+                    <i class="fas fa-home"></i> Home
+                  </a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: larger; color: black">
+                    Assignments
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="https://www.cise.ufl.edu/~kcen/cis4930/assign1/index.html">Assignment 1</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="https://www.cise.ufl.edu/~kcen/cis4930/assign2/index.html">Assignment 2</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="https://www.cise.ufl.edu/~kcen/cis4930/assign3/index.html">Assignment 3</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        
+        <br>
+
+        <h1 class="stylizedHeading" style="text-align: center; background-color: rgba(66, 105, 66, 0.493)"> Fitness Calorie Calculator </h1>
+
+        <h2 class="stylizedHeading" style="background-color: rgba(90, 138, 143, 0.537); color: #0c1d24;">
+            <center>
+                Kevin Cen
+            </center>
+        </h2>
+    
+        <hr>
+
+        <br>
+
+        <h2> Welcome to the Fitness Calorie Calculator! </h2>
+
+        <br>
+
+        <div class="accordion shadow-lg" id="descAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  <h5> <strong> <em> "What is the Fitness Calorie Calculator?" </em> </strong> </h5>
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#descAccordion">
+                <div class="accordion-body questionText">
+                  <ul>
+                    <li>
+                        <p>
+                            <strong>
+                                Basal metabolic rate (BMR) is the amount of energy needed while resting in a temperate environment when the digestive system is inactive.
+                            </strong>
+                        </p>
+                    </li>
+            
+                    <li>
+                        <p>
+                            In other words, BMR can be described as <strong> the estimated number of calories a person can consume in a day to maintain their body-weight, assuming they remain at rest. </strong>
+                        </p>
+                    </li>
+            
+                    <li>
+                        <p>
+                          To determine how many calories you should generally consume per day, you can <strong> take your BMR value and multiply it by a constant. </strong>
+                        </p>
+                    </li>
+            
+                    <ul>
+                        <li>
+                            <em>
+                                This constant is based on <strong> how much physical activity you engage in on a regular basis. </strong>
+                            </em>
+                        </li>
+                    </ul>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <h5> <strong> <em> "What Are the Specific Equations That This Calculator Uses?" </em> </strong> </h5>
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#descAccordion">
+                <div class="accordion-body">
+                    <h5 style="text-align: center"> <em> This calculator uses the <strong> Mifflin-St Jeor Equation </strong> for calculating one's basal metabolic rate (BMR): </em> </h5>
+                    <br>
+                    <div style="display: flex; justify-content: center;" > 
+                        <h4 style="text-align:center; background-color: rgba(66, 105, 66, 0.493); width: 70%"> <strong> For men: </strong> <br> BMR = 10W + 6.25H - 5A + 5 </h4>
+                    </div>
+                
+                    <div style="display: flex; justify-content: center;">
+                        <h4 style="text-align:center; background-color: rgba(63, 85, 63, 0.493); width: 70%"> <strong> For women: </strong> <br> BMR = 10W + 6.25H - 5A - 161 </h4>
+                    </div>
+                    <br>
+                    <div style="display: flex; justify-content: center;">
+                        <h3 style="text-align:center; background-color: rgba(208, 164, 68, 0.493); width: 90%; font-size:18px"> <em> Where 'W' is body weight (kgs), 'H' is body height (cm), and 'A' is age (years). </em> </h3>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br>
+
+          <hr>
+
+          <div style="text-align: center">
+            <h4> Fill in the form below to calculate your BMR: </h4>
+            <p style="font-size: larger"> <em> Hover over each question to learn about its purpose in determining one's BMR. </em></p>
+          </div>
+
+          <div class="card custom-card shadow-lg">
+            <div class="card-body">
+              <form id="form" class="needs-validation" novalidate>
+                <!-- FIRST QUESTION -->
+                <fieldset class="border p-3">
+                  <legend class="w-auto">
+                    Question 1:
+                  </legend>
+
+                  <div class="form-group">
+                    <label class="questionText" style="font-weight: bold" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="The BMR equation differs based on gender (see above).">What is your gender?</label>
+                    <p style="font-size: larger"> <em> Please select one radio button. </em> </p>
+
+                    <div class="form-check questionText">
+                      <input class="form-check-input" type="radio" name="gender" id="male" value="male" required>
+                      <label class="form-check-label" for="male">
+                        Male
+                      </label>
+                    </div>
+                    
+                    <div class="form-check questionText">
+                      <input class="form-check-input" type="radio" name="gender" id="female" value="female" required>
+                      <label class="form-check-label" for="female">
+                        Female
+                      </label>
+
+                      <div class="invalid-feedback questionText">
+                        <i class="fas fa-arrow-up"></i> <em>A gender was not selected.
+                          <br> Please choose a gender.</em>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+
+                <!-- SECOND QUESTION -->
+                <fieldset class="border p-3">
+                  <legend class="w-auto">
+                    Question 2:
+                  </legend>
+
+                  <div class="form-group">
+                    <label class="questionText" style="font-weight: bold" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Weight is directly proportional to one's basal metabolic rate.">How much do you weigh?</label>
+                    <p style="font-size: larger"> <em> Please enter in the textbox below (in pounds). </em> </p>
+                    
+                    <div class="input-group">
+                      <input type="text" name="weight" id="weightInput" class="form-control questionText" placeholder="Enter weight" pattern="^\d+(\.?\d+)?$" minlength="1" required>
+                      <div class="input-group-append">
+                        <span class="input-group-text questionText">lbs</span>
+                      </div>
+                      <div class="invalid-feedback questionText">
+                        <i class="fas fa-arrow-up"></i> <em> Please type in a nonegative numeric value for the weight. </em> 
+                      </div>
+                    </div>
+                    
+                  </div>
+                </fieldset>
+
+                <!-- THIRD QUESTION -->
+                <fieldset class="border p-3">
+                  <legend class="w-auto">
+                    Question 3:
+                  </legend>
+
+                  <div class="form-group">
+                    <label class="questionText" style="font-weight: bold" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="An increase in height has a positive relationship with BMR.">What is your height?</label>
+                    <p style="font-size: larger"> <em> Please enter your height in the textbox below (in feet and inches). </em> </p>
+                    <div class="row">
+                      <div class="col-md-6 col-sm-12">
+                        <div class="input-group mb-3">
+                          <input type="text" name="feet" id="feetInput" class="form-control questionText" placeholder="Feet" pattern="^\d+$" minlength="1" required>
+                          <div class="input-group-append">
+                            <span class="input-group-text questionText">ft</span>
+                          </div>
+                          <div class="invalid-feedback questionText"> 
+                            <i class="fas fa-arrow-up"></i> <em> Please type in a nonegative numeric value for the feet. </em> 
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 col-sm-12">
+                        <div class="input-group mb-3">
+                          <input type="text" name="inch" id="inchInput" class="form-control questionText" placeholder="Inches" pattern="^([1-9]|1[01])(\.\d+)?$" minlength="1" required>
+                          <div class="input-group-append">
+                            <span class="input-group-text questionText">in</span>
+                          </div>
+                          <div class="invalid-feedback questionText"> 
+                            <i class="fas fa-arrow-up"></i> <em> Please type in a nonegative numeric value for the inch. <br> Also, do not enter an inch value that could be cleanly represented in feet. </em> 
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+                
+                <!-- FOURTH QUESTION -->
+                <fieldset class="border p-3">
+                  <legend class="w-auto">
+                    Question 4:
+                  </legend>
+
+                    <div class="form-group">
+                      <label class="questionText" style="font-weight: bold" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="The older you are, the less your BMR will be.">How old are you?</label>
+                      <p style="font-size: larger"> <em> Please select an age from the dropdown (in years). </em> </p>
+                    
+                      <select name="age" id="ageInput" class="form-select questionText" required>
+                        <option value=""></option>
+                        <script>
+                          for (var i = 1; i <= 100; i++) {
+                            $('<option>', {
+                              value: i,
+                              text: i
+                            }).appendTo('select');
+                          }
+                      </script>
+                      </select>
+                      <div class="invalid-feedback questionText"> 
+                        <i class="fas fa-arrow-up"></i> <em> An age was not selected. <br> Please select an age. </em> 
+                      </div>
+                  </div>
+                </fieldset>
+                
+                <!-- FIFTH QUESTION -->
+                <fieldset class="border p-3">
+                <legend class="w-auto">
+                  Question 5:
+                </legend>
+
+                  <div class="form-group">
+                    <label class="questionText" style="font-weight: bold" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="The amount of exercise one regularly engages in can affect your actual daily caloric value.">Which of the following statements fit you?</label>
+                    <p style="font-size: larger"> <em> Select all checkboxes that apply and choose the most specific answer(s). </em> </p>
+                    
+                    <div class="form-check questionText">
+                      <input name="L1" class="form-check-input" type="checkbox" value="1" id="L1" required>
+                      <label class="form-check-label" for="L1">
+                        I regularly engage in leisurely exercies (e.g. walking, tai chi) <strong> 1-3 </strong> times a week.
+                      </label>
+                    </div>
+                    
+                    <div class="form-check questionText">
+                      <input name="L2" class="form-check-input" type="checkbox" value="2" id="L2" required>
+                      <label class="form-check-label" for="L2">
+                        I regularly engage in leisurely exercies (e.g. walking, tai chi) <strong> 4-5 </strong> times a week.
+                      </label>
+                    </div>
+
+                    <div class="form-check questionText">
+                      <input name="L3" class="form-check-input" type="checkbox" value="3" id="L3" required>
+                      <label class="form-check-label" for="L3">
+                        I regularly engage in leisurely exercies (e.g. walking, tai chi) <strong> 6-7 </strong> times a week.
+                      </label>
+                    </div>
+
+                    <hr>
+
+                    <div class="form-check questionText">
+                      <input name="AE1" class="form-check-input" type="checkbox" value="1" id="AE1" required>
+                      <label class="form-check-label" for="AE1">
+                        I regularly engage in aerobic exercises (e.g. running, swimming, cycling) <strong> 1-3 </strong> times a week.
+                      </label>
+                    </div>
+
+                    <div class="form-check questionText">
+                      <input name="AE2" class="form-check-input" type="checkbox" value="2" id="AE2" required>
+                      <label class="form-check-label" for="AE2">
+                        I regularly engage in aerobic exercises (e.g. running, swimming, cycling) <strong> 4-5 </strong> times a week.
+                      </label>
+                    </div>
+
+                    <div class="form-check questionText">
+                      <input name="AE3" class="form-check-input" type="checkbox" value="3" id="AE3" required>
+                      <label class="form-check-label" for="AE3">
+                        I regularly engage in aerobic exercises (e.g. running, swimming, cycling) <strong> 6-7 </strong> times a week.
+                      </label>
+                    </div>
+
+                    <hr>
+
+                    <div class="form-check questionText">
+                      <input name="AN1" class="form-check-input" type="checkbox" value="1" id="AN1" required>
+                      <label class="form-check-label" for="AN1">
+                        I regularly engage in anerobic exercises (e.g. weightlifting, calisthenics) <strong> 1-3 </strong> times a week.
+                      </label>
+                    </div>
+
+                    <div class="form-check questionText">
+                      <input name="AN2" class="form-check-input" type="checkbox" value="2" id="AN2" required>
+                      <label class="form-check-label" for="AN2">
+                        I regularly engage in anerobic exercises (e.g. weightlifting, calisthenics) <strong> 4-5 </strong> times a week.
+                      </label>
+                    </div>
+
+                    <div class="form-check questionText">
+                      <input name="AN3" class="form-check-input" type="checkbox" value="3" id="AN3" required>
+                      <label class="form-check-label" for="AN3">
+                        I regularly engage in anerobic exercises (e.g. weightlifting, calisthenics) <strong> 6-7 </strong> times a week.
+                      </label>
+                    </div>
+
+                    <hr>
+
+                    <div class="form-check questionText">
+                      <input name="none" class="form-check-input" type="checkbox" value="0" id="none" required>
+                      <label class="form-check-label" for="none">
+                        None of the above statements apply to me.
+                      </label>
+                      <div class="invalid-feedback questionText"> 
+                        <i class="fas fa-arrow-up"></i> <em> Make sure that you have chosen at least one checkbox. </em> 
+                      </div>
+                    </div>
+                </div>
+                </fieldset>
+
+                <br>
+
+                <fieldset class="border p-3 hidden" id="answerBox">
+                  <div class="answerText">
+                    <p> <center> Your baseline BMR is: <strong> <span id="baseline"> </span> calories </center> </strong> </p>
+                    <p> <center> Your adjusted BMR is: <strong> <span id="adjusted"> </span> calories </center> </strong> </p>
+                  </div>
+                </fieldset>
+
+                <br>
+
+                <!-- SUBMIT AND RESET BUTTON -->
+                <div class="submitResetButton">
+                  <button type="submit" id="submitButton" class="btn btn-dark btn-lg">Calculate BMR</button>
+                  <button id="reset" type="reset" class="btn btn-dark btn-lg">Reset</button>
+                </div>
+                
+              </form>
+            </div>
+          </div>
+        <hr>
+
+        <!-- ADDITIONAL RESOURCE SECTION -->
+        <div class="card shadow-lg">
+        <h5 class="card-header questionText"> Learn More About the Mifflin-St Jeor Equation </h5>
+        <div class="card-body">
+          <button class="btn btn-dark btn-lg">
+            <a href="https://read.qxmd.com/read/2305711/a-new-predictive-equation-for-resting-energy-expenditure-in-healthy-individuals?redirected=slug" style="color: white; font-size: 20px"> Learn More </a>
+          </button>
+        </div>
+        </div>
+        
+        <!-- ADDITIONAL BOOTSTRAP CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+      
+        <!-- USED TO INITIALIZE TOOLTIPS -->
+        <script>
+          const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+          const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        </script>
+
+        <!-- SCRIPT TO SETUP BOOTSTRAP VALIDATION AND RESET BUTTON-->
+        <script>
+          (() => {
+            'use strict';
+
+            //GETS ALL FORMS WITH THE ATTRIBUTE "NEEDS-VALIDATION"
+            $('.needs-validation').each(function() {
+              const form = this;
+
+              //ADD A CUSTOM VALIDATION FUNCTION TO CHECKBOXES
+              $(form).find('input[type="checkbox"]').on('change', function() {
+                const checkboxes = $(form).find('input[type="checkbox"]');
+                const atLeastOneChecked = checkboxes.filter(':checked').length > 0;
+                //DEPENDING ON IF AT LEAST ONE CHECKBOX WAS CHECKED, 
+                //IT WILL PLACE THE "REQUIRED" ATTRIBUTE TO THE CHECKBOXES OR NOT
+                checkboxes.prop('required', !atLeastOneChecked);
+              });
+
+              //LOOPS OVER ALL FORMS AND CHECKS IF THE CONTENT IS VALID
+              $(form).submit(function(event) {
+                // STOPS IF THE FORM IS INVALID
+                if (!this.checkValidity()) {
+                  event.preventDefault();
+                  event.stopPropagation();
+
+                  //GET THE FIRST INVALID ELEMENT IN THE FORM
+                  const firstInvalidElem = $(':invalid', this).first();
+
+                  //SCROLL TO THE FIRST INVALID ELEMENT
+                  firstInvalidElem.get(0).scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                else{
+                  event.preventDefault();
+                  calculateBMR();
+                }
+
+                //SET THE FORM AS VALID
+                this.classList.add('was-validated');
+              });
+            });
+
+            //FIND THE RESET BUTTON
+            const resetBtn = $('#reset');
+
+            //FIND THE FORM
+            const form = $('#form');
+
+            //WHEN THE BUTTON IS CLICKED, REMOVE THE WAS-VALIDATED CLASS
+            resetBtn.on('click', function() {
+              // THIS GETS RID OF THE ERROR MESSAGES
+              form.removeClass('was-validated');
+
+              //REMOVE ANY GRAYED OUT OPTIONS IN Q5
+              $('input[type="checkbox"]').prop('disabled', false);
+
+              $(form).find('input[type="checkbox"]').prop('required', true);
+
+              //REMOVE THE ANSWER BOX IF VISIBLE
+              $('#answerBox').addClass('hidden');
+            });
+          })();
+        </script>
+      </div>  
+    </body>
+  <footer style="padding-top: 50px;">Copyright &#169; 2023 Kevin Cen</footer>
+</html>

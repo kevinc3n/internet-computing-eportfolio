@@ -1,0 +1,68 @@
+.makeTextTip {
+  position:relative;
+  display: inline-block;
+}
+
+.makeTextTip .textTipMessage{
+  /* MAKES THE TOOL TIP FADE IN */
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.makeTextTip:hover .textTipMessage{
+  visibility: visible;
+  opacity: 1;
+}
+
+.textFormat{
+  font-family: Montserrat;
+  font-size: 16px;
+}
+
+.questionFormat {
+  display: flex;
+  justify-content: center;
+}
+
+.tableFormatLeft, .tableFormatLeftVerify, .tableFormatRight {
+  width: 500px;
+  text-align: center;
+}
+
+/* LEFT TABLE FORMATTING WHEN THE INPUT IS WRONG */
+.tableFormatLeftVerify{
+  margin-right: 5%;
+  float:left;
+}
+
+/* LEFT TABLE FORMATTING WHEN THE INPUT IS NOT WRONG */
+.tableFormatLefT{
+  float:left;
+  margin: auto;
+}
+
+.tableFormatRight{
+  float:right;
+  background-color: rgb(248, 161, 161);
+}
+
+.tableDataFormat{
+  font-size: 18px; 
+  text-align: center
+}
+
+.answerFormat{
+  font-size: 28px; 
+  text-align: center
+}
+
+.verifyFormat{
+  font-size: 16px; 
+  text-align: center
+}
+
+.centerButton {
+  margin-left: auto; 
+  margin-right: auto;
+  display: inline-block;
+}

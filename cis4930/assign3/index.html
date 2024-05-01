@@ -1,0 +1,210 @@
+<html>
+    <head>
+        <title>
+            Statistics Calculator
+        </title>
+
+    <!-- BOOTSTRAP META TAGS -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- BOOTSTRAP LINK -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    
+    <link href="../style.css" rel="stylesheet" type="text/css">
+    <link href="assign3_style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/x-icon" href="assign3_files/pocket_calculator.png">
+
+    <script src="statistics.js"></script>
+    
+    <!-- PARSING FUNCTION IS LINKED IN THE HEADER TAG OF HTML FILE -->
+    <!-- THIS IS PLACED IN A SEPARATE JS FILE INSTEAD OF BEING DIRECTLY HERE BECAUSE THE CALCULATION PAGE AND TEST CASE PAGE BOTH NEED THESE FUNCTIONS -->
+    <script src="getInformation.js"></script>
+   
+    </head>
+
+    <body>
+        <form>
+            <h1 class="stylizedHeading" style="text-align: center; background-color: #F6BD60; color: #0c1d24"> Statistics Calculator </h1>
+    
+            <h2 class="stylizedHeading" style="background-color: #9CC4B2; color: #0c1d24;">
+                <center>
+                    Kevin Cen
+                </center>
+            </h2>
+        
+            <hr>
+    
+            <h4> <strong> Please input your values in the textbox below: </strong> </h4>
+    
+            <p> <em> Enter numbers separated by spaces: </em> </p> <textarea id='inputText' class="resizable textFormat" placeholder="e.g. 1 2 3 4 5"></textarea>
+    
+            <br>
+
+            <br>
+
+            <p>
+              <button id="submitButton" class="btn btn-primary buttonFormat" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onClick='findStatistics()'>
+                Get Statistics
+              </button>
+            </p>
+
+            <hr>
+
+            <!-- START OF COLLAPSE CARD -->
+            <div class="collapse" id="collapseExample">
+              <div class="card card-body">
+                <h4> <center> <strong> Your inputted values are: </strong> </center> </h4>
+        
+                <h5 id="displayNum" style="text-align: center; font-weight: bold;"> </h5>
+        
+                <hr>
+        
+                <div style="text-align: center">
+                  <h4> Your statistics summary is shown below: </h4>
+                  <h6> <em> Scroll down to view the equations used and test cases. </em> </h6>
+                </div>
+              
+                <br>
+        
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th class="headerHighlight">Number of Values</th>
+                        <th class="headerHighlight">Sum</th>
+                        <th class="headerHighlight">Mean</th>
+                        <th class="headerHighlight">Median</th>
+                        <th class="headerHighlight">Mode</th>
+                      </tr>
+                    </thead>
+        
+                    <tbody>
+                      <tr>
+                        <td id="number" class="dataHighlight"></td>
+                        <td id="sum" class="dataHighlight"></td>
+                        <td id="mean" class="dataHighlight"></td>
+                        <td id="median" class="dataHighlight"></td>
+                        <td id="mode" class="dataHighlight"></td>
+                      </tr>
+                    </tbody>
+        
+                    <thead>
+                      <tr>
+                        <th class="headerHighlight">Max</th>
+                        <th class="headerHighlight">Min</th>
+                        <th class="headerHighlight">Range</th>
+                        <th class="headerHighlight">Variance (Sample)</th>
+                        <th class="headerHighlight">Standard Deviation</th>
+                      </tr>
+                    </thead>
+        
+                    <tbody>
+                      <tr>
+                        <td id="max" class="dataHighlight"></td>
+                        <td id="min" class="dataHighlight"></td>
+                        <td id="range" class="dataHighlight"></td>
+                        <td id="variance" class="dataHighlight"></td>
+                        <td id="SD" class="dataHighlight"></td>
+                      </tr>
+                    
+                    </tbody>
+                    </table>
+                </div>
+
+                <hr>
+
+                <div class="text-center">
+                  <p>
+                    <button class="btn btn-primary buttonFormat" type="button" data-bs-toggle="collapse" data-bs-target="#equation" data-bs-parent="#equation" aria-expanded="false" aria-controls="equation">
+                      View Equations
+                    </button>
+                  </p>
+                </div>
+                
+                <!-- START OF COLLAPSE CARD -->
+                <div class="collapse" id="equation">
+                  <div class="card card-body">
+                    <h4> <center> <strong> Equations Used: </strong> </center> </h4>
+                    <h6> <center> <em> Equations were used for: Sum, Mean, Median, Variance, Standard Deviation</em> </center> </h6>
+
+                    <div id="carouselExampleCaptions" class="carousel slide col-lg-12 mx-auto" style="max-width: 400px; max-height: 400px">
+                      <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                      </div>
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="assign3_files/sum.png" class="d-block w-100" alt="...">
+                          <div class="carousel-caption d-none d-md-block">
+                            <h5>Summation Equation</h5>
+                          </div>
+                        </div>
+                        <div class="carousel-item">
+                          <img src="assign3_files/mean.png" class="d-block w-100" alt="...">
+                          <div class="carousel-caption d-none d-md-block">
+                            <h5>Mean Equation</h5>
+                          </div>
+                        </div>
+                        <div class="carousel-item">
+                          <img src="assign3_files/median.png" class="d-block w-100" alt="...">
+                          <div class="carousel-caption d-none d-md-block">
+                            <h5>Median Equation</h5>
+                          </div>
+                        </div>
+                        <div class="carousel-item">
+                          <img src="assign3_files/variance.png" class="d-block w-100" alt="...">
+                          <div class="carousel-caption d-none d-md-block">
+                            <h5>Variance Equation</h5>
+                          </div>
+                        </div>
+                        <div class="carousel-item">
+                          <img src="assign3_files/SD.png" class="d-block w-100" alt="...">
+                          <div class="carousel-caption d-none d-md-block">
+                            <h5>SD Equation</h5>
+                          </div>
+                        </div>
+                      </div>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <hr>
+
+                <div class="text-center">
+                  <p>
+                    <button class="btn btn-primary buttonFormat" type="button" data-bs-toggle="collapse" data-bs-target="#testCases" aria-expanded="false" aria-controls="testCases">
+                      View Test Cases
+                    </button>
+                  </p>
+                </div>
+                
+                <!-- START OF COLLAPSE CARD -->
+                <div class="collapse" id="testCases">
+                  <div class="card card-body">
+                    <p style="text-align: center; font-size: larger;"> <strong> <a href="test_cases.html"> Click Here to Visit the Test Cases Page </a> </strong> </p>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+
+        <!-- ADDITIONAL BOOTSTRAP LINKS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    </body>
+
+    <footer style="padding-top: 50px;">Copyright &#169; 2023 Kevin Cen</footer>
+    
+</html>

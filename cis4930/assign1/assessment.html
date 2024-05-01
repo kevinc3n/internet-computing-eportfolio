@@ -1,0 +1,38 @@
+<html>
+<head>
+     <!-- NOTE: IF THIS PAGE IS OPENED ON ITS OWN, NOTHING WILL DISPLAY AS THERE WAS NO REQUEST FROM AN ANCHOR TAG -->
+    <title>
+        Assessment and Feedback Page
+    </title>
+    
+    <link href="../style.css" rel="stylesheet" type="text/css">
+    <link href="assign1_style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/x-icon" href="assign1_files/computer.png">
+</head>
+
+<body class="pageMargin">
+    <h1 class="stylizedHeading" style="background-color: rgba(156, 181, 185, 0.493)"> 
+        <center>
+            Assessment and Feedback Page 
+        </center>
+    </h1>
+    
+    <table class="tableFormat">
+            <tr>
+                <center>
+                    <td style="font-size: larger; line-height: 1.75;" id="textCell"> </td>
+                </center>
+            </tr>
+        
+    </table>
+    
+    <script>
+        //TAKE THE PASSED IN TEXT AND DISPLAY IT
+        var urlParams = new URLSearchParams(window.location.search);
+        var text = urlParams.get("text");
+        document.getElementById("textCell").innerHTML = text;     
+    </script>
+
+     <a href="index.html#assessmentStart"> <center> <p> Click here to return to the lesson. </p> </center> </a>
+</body>
+</html>

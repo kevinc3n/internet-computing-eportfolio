@@ -1,0 +1,581 @@
+<html>
+<head>
+    <title>
+        Fitness Calorie Calculator
+    </title>
+    <link href="../style.css" rel="stylesheet" type="text/css">
+    <link href="assign2_style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/x-icon" href="assign2_files/running.png">
+
+    <script>
+        function processForm(){
+           
+            resetForm();
+
+            var I1 = checkGender();
+            var I2 = checkWeight();
+            var I3 = checkHeight();
+            var I4 = checkAge();
+            var I5 = checkActivity();
+
+            //LOOP THROUGH THE VARIABLES "I1-I5" AND IF IT ENCOUNTERS AN "ERROR", THEN SET CONTINUECALC TO FALSE
+            var continueCalc = true;
+            for (var i = 1; i <= 5; i++){
+                if (eval("I" + i) == "ERROR"){
+                    continueCalc = false;
+                }
+            }
+
+            //IF CONTINUECALC IS TRUE, THEN RUN THE REST OF THE CODE
+            if (continueCalc == true){
+                var gender = I1;
+                var weight = I2;
+                var height = I3;
+                var age = I4;
+                var multiplier = getMultiplier();
+    
+                //DATA IS VALID, CALL APPROPRIATE FUNCTION TO PROCESS THE VALID INPUT
+                if (gender == "male"){
+                    calculateMaleBMR(weight, height, age, multiplier);
+                }
+                else{
+                    calculateFemaleBMR(weight, height, age, multiplier);
+                }   
+            }
+        }
+
+        function resetForm(){
+            checkStatus = 0;
+            
+            for (var i = 1; i <= 5; i++){
+                document.getElementById("V" + i).classList.add("hidden");
+            }
+
+            for (var i = 1; i <= 5; i++){
+                document.getElementById("Q" + i).classList.remove("tableFormatLeftVerify");
+                document.getElementById("Q" + i).classList.add("tableFormatLeft");
+            }
+
+            document.getElementById("answerBox").classList.add("hidden");
+        }
+
+        function checkGender(){
+            if (!(document.getElementById("userMale").checked) && !(document.getElementById("userFemale").checked)) {
+                
+                //SHOW THE RIGHT-SIDE TABLE
+                document.getElementById("V1").classList.remove("hidden");
+
+                //MODIFY THE LEFT TABLE'S ALIGNMENT
+                document.getElementById("Q1").classList.remove("tableFormatLeft");
+                document.getElementById("Q1").classList.add("tableFormatLeftVerify");
+                
+                return "ERROR";
+            }
+            else if (document.getElementById("userMale").checked){
+                return "male";
+            }
+            else{
+                return "female";
+            }
+        }
+
+        function checkWeight(){
+            var inputWeight = parseInt(document.getElementById("userWeight").value);
+            if (isNaN(inputWeight) || inputWeight < 0) {
+                //SHOW THE RIGHT-SIDE TABLE
+                document.getElementById("V2").classList.remove("hidden");
+
+                //MODIFY THE LEFT TABLE'S ALIGNMENT
+                document.getElementById("Q2").classList.remove("tableFormatLeft");
+                document.getElementById("Q2").classList.add("tableFormatLeftVerify");
+                
+                return "ERROR";
+            }
+            else{
+                return weightKilo = convertToKilo(inputWeight);
+            }
+        }
+
+        function checkHeight(){
+            var inputFeet = parseInt(document.getElementById("userFeet").value);
+            var inputInch = parseInt(document.getElementById("userInch").value);
+
+            if ((isNaN(inputFeet) || isNaN(inputInch)) || (inputFeet < 0 || inputInch < 0) || inputInch >= 12) {
+                //SHOW THE RIGHT-SIDE TABLE
+                document.getElementById("V3").classList.remove("hidden");
+
+                //MODIFY THE LEFT TABLE'S ALIGNMENT
+                document.getElementById("Q3").classList.remove("tableFormatLeft");
+                document.getElementById("Q3").classList.add("tableFormatLeftVerify");
+                
+                return "ERROR";
+            }
+            else{
+                return convertToCm(inputFeet, inputInch);
+            }
+        }   
+
+        function checkAge(){
+            if (document.getElementById("userAge").value == "noAnswer"){
+                //SHOW THE RIGHT-SIDE TABLE
+                document.getElementById("V4").classList.remove("hidden");
+
+                //MODIFY THE LEFT TABLE'S ALIGNMENT
+                document.getElementById("Q4").classList.remove("tableFormatLeft");
+                document.getElementById("Q4").classList.add("tableFormatLeftVerify");
+
+                return "ERROR";
+            }
+            else{
+                return document.getElementById("userAge").value;
+            }
+        }
+
+        function checkActivity(){
+            //CHECK IF ANY WERE SELECTED
+            var errorFound = false;
+
+            var anySelected = false;
+            for (var i = 0; i <= 9; i++){
+                if (document.getElementById("L" + i).checked == true){
+                    anySelected = true;
+                }
+            }
+
+            if (anySelected == false){
+                activityError();
+                return "ERROR";
+            }
+
+             //IF THE "NONE OF THE ABOVE" OPTION WAS CHOSEN, THEN CHECK IF ANY OTHER OPTIONS WERE CHECKED
+            var conflictError = false;
+            if (document.getElementById("L0").checked == true){
+                for (var i = 1; i <= 9; i++){
+                    if (document.getElementById("L" + i).checked == true){
+                        conflictError = true;
+                    }
+                }
+                if (conflictError == true){
+                    activityError();
+                    return "ERROR";
+                }
+            }
+
+            //CHECK IF THE USER WAS NOT SPECIFIC ENOUGH IN THEIR ANSWERS
+            //I.E. THE USER DID NOT SELECT MULTIPLE CHECKS IN THE SAME SECTION
+            //E.G. SAYING YOU DO AN ACTIVITY BOTH 1-3 TIMES A WEEK AND 4-5 TIMES
+            var startingIndex = 1;
+            var endingIndex = 3;
+            var checkCount = 0;
+
+            while (endingIndex <= 9){
+                checkCount = 0;
+                for (var i = startingIndex;  i <= endingIndex;  i++){
+                    if (document.getElementById("L" +  i).checked == true){
+                        checkCount += 1;
+                    }
+                }
+                if (checkCount > 1){
+                    activityError();
+                    return "ERROR";
+                }
+                startingIndex += 3;
+                endingIndex += 3;
+            }
+        }
+
+        function activityError(){
+             //SHOW THE RIGHT-SIDE TABLE
+             document.getElementById("V5").classList.remove("hidden");
+
+            //MODIFY THE LEFT TABLE'S ALIGNMENT
+            document.getElementById("Q5").classList.remove("tableFormatLeft");
+            document.getElementById("Q5").classList.add("tableFormatLeftVerify");
+        }
+
+        //GO THROUGH EACH I.D.
+        //IF CHECKED, ADD ITS VALUE TO THE TOTALSCORE VAR
+        //AFTER SUMMING, RETURN ITS RESPECTIVE MULTIPLIER VALUE
+        function getMultiplier(){
+            var totalScore = 0;
+
+            for (var i = 1; i <= 9; i++){
+                if (document.getElementById("L" + i).checked == true){
+                    totalScore = totalScore + parseInt(document.getElementById("L" + i).value);
+                }
+            }
+
+            if (totalScore >= 8 && totalScore <= 9){
+                return 1.725;
+            }
+            else if (totalScore >= 6 && totalScore <= 7){
+                return 1.55;
+            }
+            else if (totalScore >= 3 && totalScore <= 5){
+                return 1.375;
+            }
+            else if (totalScore >= 1 && totalScore <= 2){
+                return 1.2;
+            }
+            else{
+                return 1;
+            }
+        }
+
+        function convertToCm(inputFeet, inputInch){
+            inputFeet = inputFeet * 30.48;
+            inputInch = inputInch * 2.54;
+            return inputFeet + inputInch;
+        }
+
+        function convertToKilo(inputWeight){
+            return inputWeight / (2.205);
+        }
+
+        function calculateMaleBMR(weight, height, age, multiplier){
+            var BMR = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+            BMR = Math.round(BMR);
+            var multipliedBMR = Math.round(BMR * multiplier);
+            document.getElementById("BMR").innerHTML = BMR;
+            document.getElementById("BMRMultiplier").innerHTML = multipliedBMR;
+            document.getElementById("answerBox").classList.remove("hidden");
+        }
+
+        
+        function calculateFemaleBMR(weight, height, age, multiplier){
+            var BMR = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+            BMR = Math.round(BMR);
+            var multipliedBMR = Math.round(BMR * multiplier);
+            document.getElementById("BMR").innerHTML = BMR;
+            document.getElementById("BMRMultiplier").innerHTML = multipliedBMR;
+            document.getElementById("answerBox").classList.remove("hidden");
+        }
+    </script>
+</head>
+
+<body>
+    <h1 class="stylizedHeading" style="text-align: center; background-color: rgba(66, 105, 66, 0.493)"> Fitness Calorie Calculator </h1>
+
+    <h2 class="stylizedHeading" style="background-color: rgba(90, 138, 143, 0.537); color: #0c1d24;">
+        <center>
+            Kevin Cen
+        </center>
+    </h2>
+
+    <hr>
+
+    <h3> <center> <em> This calorie calculator is based upon the Mifflin-St Jeor Equation for calculating one's basal metabolic rate (BMR): </em> </center> </h2>
+
+    <div style="display: flex; justify-content: center;" > 
+        <h3 style="text-align:center; background-color: rgba(66, 105, 66, 0.493); width: 40%"> For men: <br> BMR = 10W + 6.25H - 5A + 5 </h3>
+    </div>
+
+    <div style="display: flex; justify-content: center;">
+        <h3 style="text-align:center; background-color: rgba(63, 85, 63, 0.493); width: 40%"> For women: <br> BMR = 10W + 6.25H - 5A - 161 </h3>
+    </div>
+
+    <div style="display: flex; justify-content: center;">
+        <h3 style="text-align:center; background-color: rgba(208, 164, 68, 0.493); width: 68%; font-size:18px"> <em> Where 'W' is body weight (kgs), 'H' is body height (cm), and 'A' is age (years). </em> </h3>
+    </div>
+
+    <hr>
+
+    <ul>
+        <li>
+            <p>
+                <strong>
+                    Basal metabolic rate (BMR) is the amount of energy needed while resting in a temperate environment when the digestive system is inactive.
+                </strong>
+            </p>
+        </li>
+
+        <li>
+            <p>
+                In other words, BMR can be described as <strong> the estimated number of calories a person can consume in a day to maintain their body-weight, assuming they remain at rest. </strong>
+            </p>
+        </li>
+
+        <li>
+            <p>
+               To determine how many calories you should generally consume per day, you can <strong> take your BMR value and multiply it by a constant. </strong>
+            </p>
+        </li>
+
+        <ul>
+            <li>
+                <em>
+                    This constant is based on <strong> how much physical activity you engage in on a regular basis. </strong>
+                </em>
+            </li>
+        </ul>
+    </ul>
+
+    <p style="text-align: center; font-size: larger; background-color:rgba(162, 162, 162, 0.752)">
+       To determine your calorie number, fill out the following form below by following the directions underneath each question. 
+    </p>
+   
+    <hr>
+   
+    <form id="startQuestions">
+        <br> 
+        <!-- FIRST QUESTION -->
+        <div class="questionFormat">    
+            <table id="Q1" class="tableFormatLeft">
+
+                <tr class="makeTextTip"> 
+                    <td class="tableDataFormat" style="padding-bottom: 30px">
+                        <p> <strong> What is your gender? </strong> </p> 
+                        <p style="font-size: smaller;"> <em> Please select one radio button. </em> </p>
+
+                        <span class="textTipMessage"> The BMR equation differs based on gender (see above). <br> </span>
+
+                        <br>
+
+                        <input type='radio' id='userMale' value="male" name="gender" class="textFormat">
+                        <label for="userGender"> Male </label>
+                        
+                        <input type='radio' id='userFemale' value="female" name="gender" class="textFormat">
+                        <label for="userGender"> Female </label>
+                    </td>
+                </tr>
+            </table>
+
+            <br>
+
+            <!-- FIRST VERIFICATION --> 
+            <table id="V1" class="tableFormatRight hidden">
+                <tr>
+                    <td class="verifyFormat">
+                        <p> <strong> Input Verification Status: </strong> </p>
+                        <p id="genderStatus"> <strong style="color: red"> Error! </strong> <br> A gender was not selected. <br> Please choose a gender.</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <br>
+
+    <!-- SECOND QUESTION -->
+        <div class="questionFormat">
+            <table id="Q2" class="tableFormatLeft">
+                <tr class="makeTextTip"> 
+                    <td class="tableDataFormat">
+                        <p> <strong> How much do you weigh? </strong> </p> 
+                        <p style="font-size: smaller;"> <em> Please enter in the textbox below (in pounds). </em> </p>
+    
+                        <span class="textTipMessage"> Weight is directly proportional to one's basal metabolic rate. </span> 
+                        <div style="display: flex; align-items: center; justify-content: center;">
+                            <input type='text' id='userWeight' class="textFormat" style="width: 15%">
+                            <p style="padding-left: 10px;"> lbs </p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+    
+            <br>
+    
+        <!-- SECOND VERIFICATION -->
+            <table id="V2" class="tableFormatRight hidden">
+                <tr>
+                    <td class="verifyFormat">
+                        <p> <strong> Input Verification Status: </strong> </p>
+                        <p id="genderStatus"> <strong style="color: red"> Error! </strong> <br> Please type in a nonegative numeric value for the weight. </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <br>
+
+        <!-- THIRD QUESTION -->
+        <div class="questionFormat">
+            <table id="Q3" class="tableFormatLeft">
+                <tr class="makeTextTip"> 
+                    <td class="tableDataFormat">
+                        <p> <strong> What is your height? </strong> </p> 
+                        <p style="font-size: smaller;"> <em> Please enter your height in the textbox below (in feet and inches). </em> </p>
+    
+                        <span class="textTipMessage"> An increase in height has a positive relationship with BMR. </span> 
+                        <div style="display: flex; align-items: center; justify-content: center;">
+                            <input type='text' id='userFeet' class="textFormat" style="width: 15%">
+                            <p style="padding-left: 10px; padding-right: 10px"> ft </p>
+                     
+                            <input type='text' id='userInch' class="textFormat" style="width: 15%;">
+                            <p style="padding-left: 10px;"> in </p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+    
+            <br>
+    
+        <!-- THIRD VERIFICATION -->
+            <table id="V3" class="tableFormatRight hidden">
+                <tr>
+                    <td class="verifyFormat">
+                        <p> <strong> Input Verification Status: </strong> </p>
+                        <p id="genderStatus"> <strong style="color: red"> Error! </strong> <br> Please type in a nonegative numeric value for the height. </p>
+                        <p> <em> Also, do not enter an inch value that could be cleanly represented in feet. </em> </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+         
+        <br>
+
+        <!-- FOURTH QUESTION -->
+        <div class="questionFormat">    
+            <table id="Q4" class="tableFormatLeft">
+                <tr class="makeTextTip"> 
+                    <td class="tableDataFormat" style="padding-bottom: 5px; width: 600px; height: 50px;">
+                        <p> <strong> How old are you? </strong> </p> 
+                        <p style="font-size: smaller;"> <em> Please select an age from the dropdown (in years). </em> </p>
+    
+                        <span class="textTipMessage"> The older you are, the less your BMR will be. <br> </span> 
+                        <div style="display: flex; align-items: center; justify-content: center;">
+                            <select name="ages" id="userAge" class="textFormat" style="width: 80px">
+                                <option value="noAnswer"> </option>
+                                <script>
+                                    for (i = 1; i <= 100; i++){
+                                        document.write("<option value='" + i + "'>" + i + "</option>");
+                                    }
+                                </script>
+                            </select>
+                            <p style="padding-left: 10px;"> year(s) old </p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            
+            <br>
+        
+            <!-- FOURTH VERIFICATION --> 
+            <table id="V4" class="tableFormatRight hidden">
+                <tr>
+                    <td class="verifyFormat">
+                        <p> <strong> Input Verification Status: </strong> </p>
+                        <p id="genderStatus"> <strong style="color: red"> Error! </strong> <br> An age was not selected. <br> Please select an age.</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <br>
+
+        <!-- FIFTH QUESTION -->
+        <div class="questionFormat">    
+            <table id="Q5" class="tableFormatLeft">
+                <tr class="makeTextTip"> 
+                    <td class="tableDataFormat" style="padding-bottom: 30px">
+                        <p> <strong> Which of the following statements fit you? </strong> </p> 
+                        <p style="font-size: smaller;"> <em> Select all checkboxes that apply and choose the most specific answer(s). </em> </p>
+    
+                        <span class="textTipMessage"> The amount of exercise one regularly engages in can affect your actual daily caloric value. <br> </span> 
+                        <br>
+                        <div style="display: block; align-items: center; text-align: left; justify-content: center; padding-left: 20px">
+                           
+                            <input type="checkbox" id="L1" value="1">
+                            <label for="L1"> I regularly engage in leisurely exercies (e.g. walking, tai chi) <strong> 1-3 </strong> times a week. </label><br>
+                            <br>
+                            <input type="checkbox" id="L2" value="1">
+                            <label for="L2"> I regularly engage in leisurely exercies (e.g. walking, tai chi) <strong> 4-5 </strong> times a week. </label><br>
+                            <br>
+                            <input type="checkbox" id="L3" value="1">
+                            <label for="L3"> I regularly engage in leisurely exercies (e.g. walking, tai chi) <strong> 6-7 </strong> times a week. </label><br>
+                            <br>
+                            <input type="checkbox" id="L4" value="1">
+                            <label for="L4"> I regularly engage in aerobic exercises (e.g. running, swimming, cycling) <strong> 1-3 </strong> times a week. </label><br>
+                            <br>
+                            <input type="checkbox" id="L5" value="2">
+                            <label for="L5"> I regularly engage in aerobic exercises (e.g. running, swimming, cycling) <strong> 4-5 </strong> times a week. </label><br>
+                            <br>
+                            <input type="checkbox" id="L6" value="3">
+                            <label for="L6"> I regularly engage in aerobic exercises (e.g. running, swimming, cycling) <strong> 6-7 </strong> times a week. </label><br>
+                            <br>
+                            <input type="checkbox" id="L7" value="1">
+                            <label for="L7"> I regularly engage in anerobic exercises (e.g. weightlifting, calisthenics) <strong> 1-3 </strong> times a week. </label><br>
+                            <br>
+                            <input type="checkbox" id="L8" value="2">
+                            <label for="L8"> I regularly engage in anerobic exercises (e.g. weightlifting, calisthenics) <strong> 4-5 </strong> times a week. </label><br>
+                            <br>
+                            <input type="checkbox" id="L9" value="3">
+                            <label for="L9"> I regularly engage in anerobic exercises (e.g. weightlifting, calisthenics) <strong> 6-7 </strong> times a week. </label><br>
+                            <br>
+                            <input type="checkbox" id="L0" value="0">
+                            <label for="L0"> None of the above statements apply to me. </label><br>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            
+            <br>
+        
+            <!-- FIFTH VERIFICATION --> 
+            <table id="V5" class="tableFormatRight hidden" style="margin: auto 0;">
+                <tr>
+                    <td class="verifyFormat" style="width: 300px; height: 300px;">
+                        <p> <strong> Input Verification Status: </strong> </p>
+                        <p id="genderStatus"> <strong style="color: red"> Error! </strong> <br> Make sure that you have chosen at least one checkbox. <br> Additionally, make sure you are choosing the most specific statement(s).</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <br>
+
+        <!-- SUBMIT SECTION --> 
+        <div style="text-align: center">
+            <table class="centerButton" style="margin-right: 40px;">
+                <tr>
+                    <td class="tableDataFormat"> 
+                        <input type='button' value="Calculate BMR" onClick="processForm(); location.href='#answerBox'" class="tableDataFormat">
+                    </td>
+                </tr>
+            </table>
+    
+            <table class="centerButton" style="margin-left: 10px;">
+                <tr>
+                    <td class="tableDataFormat">
+                        <input type='reset' onClick="resetForm(); location.href='#startQuestions'" class="tableDataFormat">
+                    </td>
+                </tr>
+    
+            </table>
+        </div>
+
+        <br>
+
+        <!-- ANSWER BOX --> 
+        <table id="answerBox" style="margin: auto; padding: 10px; background-color: rgba(90, 143, 98, 0.537)" class="hidden">
+            <tr>
+                <td class="answerFormat">
+                    <h3> Your Basal Metabolic Rate (BMR) is: </h3>
+                    <div style="display: inline-block">
+                        <p id="BMR" style="float: left"> </p>
+                        <p style="float: right; padding-left: 10px;"> calories </p>
+                    </div>
+
+                    <hr>
+
+                    <h3> Your daily calorie needs: </h3>
+
+                    <div style="display: inline-block">
+                        <p id="BMRMultiplier" style="float: left"> </p>
+                        <p style="float: right; padding-left: 10px;"> calories </p>
+                    </div>
+
+                    <p style="font-size: smaller;"> <em> This is based on your level of exercise activity. </em> </p>
+
+                    <hr>
+
+                    <p> <strong> Flowchart of the Calorie Calculator </strong> </p>
+                  
+                    <img src="assign2_files/FLOWCHART.gif" alt="Flowchart of the Calorie Calculator" style="width: 1200px; height: 900px">
+                </td>
+            </tr>
+
+        </table>
+    </form>
+</body>
+<footer style="padding-top: 50px;">Copyright &#169; 2023 Kevin Cen</footer>
+</html>

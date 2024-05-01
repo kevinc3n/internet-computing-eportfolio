@@ -1,0 +1,22 @@
+.minecraftText {
+    font-family: Minecraftia
+}
+
+.minecraftTitle {
+    font-size: 18px
+}
+
+hr {
+    background-color:rgb(51, 79, 112)
+}
+
+.photoFormat {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 1rem;
+}
+
+fieldset {
+    border-radius: 1rem;
+}
+

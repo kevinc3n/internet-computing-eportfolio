@@ -1,0 +1,129 @@
+/* ROLLOVER EFFECT FOR ACTIVE LINKS 
+   NOTE: FOR STYLISTIC PURPOSES, THE HOVER EFFECT WILL STILL APPEAR EVEN AFTER CLICKING A LINK; THIS IS ACHIEVED BY ADDING "!important"
+*/
+a:hover {
+    color: #FF0000 !important;
+}
+
+/* PARAGRAPH TAG, LI, AND TD TAG HAVE SAME FONT AND COLOR */
+p, li, td, h3, h4, h5, h6 {
+    font-family: Montserrat
+}
+
+P, li, td {
+    color: black;
+}
+
+/* ALL HEADINGS HAVE SAME FONT (A CLASS IS USED FOR SPECIFIC INSTANCES WHERE THE FONT IS DIFFERENT) */
+p, li, td, h1, h2, h3, h4, h5, h6 {
+    font-family: Montserrat
+}
+
+.stylizedHeading {
+    font-family: BaliW
+}
+
+/* BODY TAG HAS A CONSISTENT MARGIN */
+body {
+    margin-left: 250px;
+    margin-right: 250px;
+    margin-top: 50px;
+    margin-bottom: 40px;
+}
+
+/* HORIZONTAL RULE HAS CONSISTENT COLOR AND WEIGHT */
+hr{
+    height: 3px;
+    background-color: #253237;
+    border: none
+}
+
+/* BACKGROUND IMAGE COLOR IS STANDARDIZED TO A GRADIENT 
+   THE EPORTFOLIO PAGE HAS A CUSTOM IMAGE APPLIED THERE THAT IS FORMATTED USING THE SPECIFICATIONS BELOW */
+body {
+    background-image: linear-gradient(to bottom, #ffffff, #afb6bc76);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* ORDERED AND UNORDERED LISTS ARE STANDARDIZED */
+ol, ul {
+    margin: 20px;
+    padding: 0px;
+    color: darkblue;
+}
+
+@font-face {
+    font-family: BaliW;
+    src: url(ePortfolio_files/Baliw.ttf);
+}
+
+@font-face {
+    font-family: Montserrat;
+    src: url(ePortfolio_files/Montserrat-VariableFont_wght.ttf);
+}
+
+::selection {
+    color:#000000;
+    background-color:rgba(220, 196, 63, 0.611);
+}
+
+h1, h2, h3, h4, h5, h6, p, li {
+    line-height: 1.5;
+}
+
+table { 
+    background-color: rgba(255, 255, 255, 0.8);
+    border-collapse:separate;
+    border:solid #253237 3px;
+    border-radius:6px;
+}
+
+tr:hover {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(226, 230, 232, 0.5);
+}
+
+a:link, a:visited {
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:link {
+    color: rgb(33, 32, 32);
+}
+
+a:visited {
+    color: rgb(64, 61, 61);
+}
+
+footer {
+    font-family: Montserrat;
+    color: rgba(0, 0, 0, 0.733);
+}
+
+.hidden {
+    display: none
+}
+
+th {
+    font-family: Montserrat;
+}
+
+.navbar-brand{
+    font-family: BaliW;
+}
+
+.custom-card {
+    border: none;
+}
+
+.dataHighlight:hover {
+    background-color: rgba(118, 118, 118, 0.229) !important;
+}
+  
+.headerHighlight:hover {
+    background-color: rgba(25, 27, 36, 0.36) !important;
+}
